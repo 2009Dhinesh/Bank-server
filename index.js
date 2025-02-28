@@ -34,17 +34,6 @@ let data = new mongoose.Schema({
 
 let Data = mongoose.model("test",data);
 
-// let data1=new Data({
-//     userId:1,
-//     name:"Dinesh",
-//     email:"dinesh@gmail.com",
-//     password:"1234",
-//     amount:1000
-// })
-// data1.save()
-
-
-// API fetch data
 
 app.get('/data' , (req , res)=>{
     Data.find().then((item)=>res.send(item));   // all data fetch the find()
@@ -78,3 +67,25 @@ app.delete('/delete/:id', async (req, res) => {
       res.status(500).send({ message: "Error updating data", error });
     }
   });
+
+//login collection
+
+  let datas = new mongoose.Schema({
+      fname:String,
+      lname:String,
+      email:String,
+      password:String
+  })
+  
+  let Datas = mongoose.model("detail",datas);
+  
+  
+  
+  
+  app.post('/register' , (req , res)=>{
+      Datas.create(req.body).then((item)=>res.send(item)).catch((err)=>console.log(err))
+  })
+  
+  app.get('/login' , (req , res)=>{
+      Datas.find().then((item)=>res.send(item)).catch((err)=>console.log(err))
+  })
